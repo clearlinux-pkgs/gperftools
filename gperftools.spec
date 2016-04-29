@@ -4,7 +4,7 @@
 #
 Name     : gperftools
 Version  : 2.4
-Release  : 3
+Release  : 4
 URL      : https://googledrive.com/host/0B6NtGsLhIcf7MWxMMF9JdTN3UVk/gperftools-2.4.tar.gz
 Source0  : https://googledrive.com/host/0B6NtGsLhIcf7MWxMMF9JdTN3UVk/gperftools-2.4.tar.gz
 Summary  : Performance tools for C++
