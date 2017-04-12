@@ -4,9 +4,9 @@
 #
 Name     : gperftools
 Version  : 2.4
-Release  : 5
-URL      : https://googledrive.com/host/0B6NtGsLhIcf7MWxMMF9JdTN3UVk/gperftools-2.4.tar.gz
-Source0  : https://googledrive.com/host/0B6NtGsLhIcf7MWxMMF9JdTN3UVk/gperftools-2.4.tar.gz
+Release  : 6
+URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.4/gperftools-2.4.tar.gz
+Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.4/gperftools-2.4.tar.gz
 Summary  : Performance tools for C++
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -33,6 +33,7 @@ Summary: dev components for the gperftools package.
 Group: Development
 Requires: gperftools-lib
 Requires: gperftools-bin
+Provides: gperftools-devel
 
 %description dev
 dev components for the gperftools package.
@@ -58,16 +59,20 @@ lib components for the gperftools package.
 %setup -q -n gperftools-2.4
 
 %build
+export LANG=C
+export SOURCE_DATE_EPOCH=1492021667
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
+export SOURCE_DATE_EPOCH=1492021667
 rm -rf %{buildroot}
 %make_install
 
@@ -98,8 +103,17 @@ rm -rf %{buildroot}
 /usr/include/gperftools/profiler.h
 /usr/include/gperftools/stacktrace.h
 /usr/include/gperftools/tcmalloc.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libprofiler.so
+/usr/lib64/libtcmalloc.so
+/usr/lib64/libtcmalloc_and_profiler.so
+/usr/lib64/libtcmalloc_debug.so
+/usr/lib64/libtcmalloc_minimal.so
+/usr/lib64/libtcmalloc_minimal_debug.so
+/usr/lib64/pkgconfig/libprofiler.pc
+/usr/lib64/pkgconfig/libtcmalloc.pc
+/usr/lib64/pkgconfig/libtcmalloc_debug.pc
+/usr/lib64/pkgconfig/libtcmalloc_minimal.pc
+/usr/lib64/pkgconfig/libtcmalloc_minimal_debug.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -108,4 +122,15 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libprofiler.so.0
+/usr/lib64/libprofiler.so.0.4.5
+/usr/lib64/libtcmalloc.so.4
+/usr/lib64/libtcmalloc.so.4.2.6
+/usr/lib64/libtcmalloc_and_profiler.so.4
+/usr/lib64/libtcmalloc_and_profiler.so.4.2.6
+/usr/lib64/libtcmalloc_debug.so.4
+/usr/lib64/libtcmalloc_debug.so.4.2.6
+/usr/lib64/libtcmalloc_minimal.so.4
+/usr/lib64/libtcmalloc_minimal.so.4.2.6
+/usr/lib64/libtcmalloc_minimal_debug.so.4
+/usr/lib64/libtcmalloc_minimal_debug.so.4.2.6
