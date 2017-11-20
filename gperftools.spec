@@ -4,7 +4,7 @@
 #
 Name     : gperftools
 Version  : 2.6.1
-Release  : 10
+Release  : 11
 URL      : https://github.com/gperftools/gperftools/archive/gperftools-2.6.1.tar.gz
 Source0  : https://github.com/gperftools/gperftools/archive/gperftools-2.6.1.tar.gz
 Summary  : Performance tools for C++
@@ -13,6 +13,7 @@ License  : BSD-3-Clause
 Requires: gperftools-bin
 Requires: gperftools-lib
 Requires: gperftools-doc
+BuildRequires : curl-dev
 BuildRequires : libunwind-dev
 
 %description
@@ -63,9 +64,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1499648136
+export SOURCE_DATE_EPOCH=1511141679
 %autogen --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -75,7 +76,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1499648136
+export SOURCE_DATE_EPOCH=1511141679
 rm -rf %{buildroot}
 %make_install
 
