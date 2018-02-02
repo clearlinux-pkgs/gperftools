@@ -4,7 +4,7 @@
 #
 Name     : gperftools
 Version  : 2.6.3
-Release  : 12
+Release  : 13
 URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.6.3/gperftools-2.6.3.tar.gz
 Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.6.3/gperftools-2.6.3.tar.gz
 Summary  : Performance tools for C++
