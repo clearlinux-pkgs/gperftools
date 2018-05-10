@@ -4,7 +4,7 @@
 #
 Name     : gperftools
 Version  : 2.7
-Release  : 14
+Release  : 15
 URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Summary  : Performance tools for C++
