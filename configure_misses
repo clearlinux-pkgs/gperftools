@@ -10,7 +10,6 @@ Configure miss: if int32_t is the same type as intptr_t
 Configure miss: cygwin/signal.h usability
 Configure miss: cygwin/signal.h presence
 Configure miss: cygwin/signal.h
-Configure miss: x86 without frame pointers
 Configure miss: if C++ compiler supports std::align_val_t without options
 Configure miss: __builtin_stack_pointer()
 Configure miss: if nanosleep requires any libraries
