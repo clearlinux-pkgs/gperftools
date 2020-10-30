@@ -4,16 +4,16 @@
 #
 Name     : gperftools
 Version  : 2.7
-Release  : 17
+Release  : 18
 URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Summary  : Performance tools for C++
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: gperftools-bin
-Requires: gperftools-lib
-Requires: gperftools-license
-Requires: gperftools-man
+Requires: gperftools-bin = %{version}-%{release}
+Requires: gperftools-lib = %{version}-%{release}
+Requires: gperftools-license = %{version}-%{release}
+Requires: gperftools-man = %{version}-%{release}
 BuildRequires : libunwind-dev
 Patch1: cve-2018-13420.nopatch
 
@@ -25,8 +25,7 @@ malloc() and cpu and heap profiling utilities.
 %package bin
 Summary: bin components for the gperftools package.
 Group: Binaries
-Requires: gperftools-license
-Requires: gperftools-man
+Requires: gperftools-license = %{version}-%{release}
 
 %description bin
 bin components for the gperftools package.
@@ -35,9 +34,10 @@ bin components for the gperftools package.
 %package dev
 Summary: dev components for the gperftools package.
 Group: Development
-Requires: gperftools-lib
-Requires: gperftools-bin
-Provides: gperftools-devel
+Requires: gperftools-lib = %{version}-%{release}
+Requires: gperftools-bin = %{version}-%{release}
+Provides: gperftools-devel = %{version}-%{release}
+Requires: gperftools = %{version}-%{release}
 
 %description dev
 dev components for the gperftools package.
@@ -46,7 +46,7 @@ dev components for the gperftools package.
 %package doc
 Summary: doc components for the gperftools package.
 Group: Documentation
-Requires: gperftools-man
+Requires: gperftools-man = %{version}-%{release}
 
 %description doc
 doc components for the gperftools package.
@@ -55,7 +55,7 @@ doc components for the gperftools package.
 %package lib
 Summary: lib components for the gperftools package.
 Group: Libraries
-Requires: gperftools-license
+Requires: gperftools-license = %{version}-%{release}
 
 %description lib
 lib components for the gperftools package.
@@ -79,33 +79,38 @@ man components for the gperftools package.
 
 %prep
 %setup -q -n gperftools-2.7
+cd %{_builddir}/gperftools-2.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1535669598
-export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604093221
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1535669598
+export SOURCE_DATE_EPOCH=1604093221
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/gperftools
-cp COPYING %{buildroot}/usr/share/doc/gperftools/COPYING
-cp packages/deb/copyright %{buildroot}/usr/share/doc/gperftools/packages_deb_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/gperftools
+cp %{_builddir}/gperftools-2.7/COPYING %{buildroot}/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82
+cp %{_builddir}/gperftools-2.7/packages/deb/copyright %{buildroot}/usr/share/package-licenses/gperftools/651a4dab58af3da996d7e917053abdc165fc4b7f
 %make_install
 
 %files
@@ -168,9 +173,10 @@ cp packages/deb/copyright %{buildroot}/usr/share/doc/gperftools/packages_deb_cop
 /usr/lib64/libtcmalloc_minimal_debug.so.4.5.3
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/gperftools/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82
+/usr/share/package-licenses/gperftools/651a4dab58af3da996d7e917053abdc165fc4b7f
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/pprof.1
