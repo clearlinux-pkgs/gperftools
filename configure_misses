@@ -1,17 +1,15 @@
-Configure miss: x86_64-generic-linux-gnu-objcopy
-Configure miss: if objcopy supports -W
+Configure miss: __builtin_stack_pointer()
 Configure miss: __int64
-Configure miss: conflict-signal.h usability
-Configure miss: conflict-signal.h presence
 Configure miss: conflict-signal.h
+Configure miss: conflict-signal.h presence
+Configure miss: conflict-signal.h usability
+Configure miss: cygwin/signal.h
+Configure miss: cygwin/signal.h presence
+Configure miss: cygwin/signal.h usability
+Configure miss: if int32_t is the same type as intptr_t
+Configure miss: if nanosleep requires any libraries
+Configure miss: if objcopy supports -W
 Configure miss: valgrind.h usability
 Configure miss: whether cfree is declared
-Configure miss: if int32_t is the same type as intptr_t
-Configure miss: cygwin/signal.h usability
-Configure miss: cygwin/signal.h presence
-Configure miss: cygwin/signal.h
-Configure miss: if C++ compiler supports std::align_val_t without options
-Configure miss: __builtin_stack_pointer()
-Configure miss: if nanosleep requires any libraries
-Configure miss: whether what we have so far is sufficient with -nostdlib
 Configure miss: whether pthread symbols are available in C++ without including pthread.h
+Configure miss: x86_64-generic-linux-gnu-objcopy

@@ -4,7 +4,7 @@
 #
 Name     : gperftools
 Version  : 2.7
-Release  : 19
+Release  : 20
 URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.7/gperftools-2.7.tar.gz
 Summary  : Performance tools for C++
@@ -86,15 +86,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604093221
+export SOURCE_DATE_EPOCH=1664939605
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -106,11 +106,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1604093221
+export SOURCE_DATE_EPOCH=1664939605
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gperftools
-cp %{_builddir}/gperftools-2.7/COPYING %{buildroot}/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82
-cp %{_builddir}/gperftools-2.7/packages/deb/copyright %{buildroot}/usr/share/package-licenses/gperftools/651a4dab58af3da996d7e917053abdc165fc4b7f
+cp %{_builddir}/gperftools-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82 || :
+cp %{_builddir}/gperftools-%{version}/packages/deb/copyright %{buildroot}/usr/share/package-licenses/gperftools/651a4dab58af3da996d7e917053abdc165fc4b7f || :
 %make_install
 
 %files
