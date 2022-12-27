@@ -2,6 +2,7 @@ libprofiler.so.0:ProfilerDisable
 libprofiler.so.0:ProfilerEnable
 libprofiler.so.0:ProfilerFlush
 libprofiler.so.0:ProfilerGetCurrentState
+libprofiler.so.0:ProfilerGetStackTrace
 libprofiler.so.0:ProfilerRegisterThread
 libprofiler.so.0:ProfilerStart
 libprofiler.so.0:ProfilerStartWithOptions
@@ -9,7 +10,6 @@ libprofiler.so.0:ProfilerStop
 libprofiler.so.0:ProfilingIsEnabledForAllThreads
 libprofiler.so.0:RunningOnValgrind
 libprofiler.so.0:TCMallocGetenvSafe
-libprofiler.so.0:ValgrindSlowdown
 libprofiler.so.0:_Z13GetStackTracePPvii
 libprofiler.so.0:_Z14GetStackFramesPPvPiii
 libprofiler.so.0:_Z16GetenvBeforeMainPKc
@@ -17,7 +17,6 @@ libprofiler.so.0:_Z17RawOpenForWritingPKc
 libprofiler.so.0:_Z18GetSystemCPUsCountv
 libprofiler.so.0:_Z19ProfileHandlerResetv
 libprofiler.so.0:_Z20GetUniquePathFromEnvPKcPc
-libprofiler.so.0:_Z20SleepForMillisecondsi
 libprofiler.so.0:_Z22ProfileHandlerGetStateP19ProfileHandlerState
 libprofiler.so.0:_Z22perftools_pthread_oncePiPFvvE
 libprofiler.so.0:_Z24GetStackTraceWithContextPPviiPKv
@@ -175,7 +174,6 @@ libtcmalloc.so.4:RunningOnValgrind
 libtcmalloc.so.4:TCMallocGetenvSafe
 libtcmalloc.so.4:TCMalloc_ListAllProcessThreads
 libtcmalloc.so.4:TCMalloc_ResumeAllProcessThreads
-libtcmalloc.so.4:ValgrindSlowdown
 libtcmalloc.so.4:_Z13GetStackTracePPvii
 libtcmalloc.so.4:_Z14GetStackFramesPPvPiii
 libtcmalloc.so.4:_Z16GetenvBeforeMainPKc
@@ -183,7 +181,6 @@ libtcmalloc.so.4:_Z17RawOpenForWritingPKc
 libtcmalloc.so.4:_Z18GetSystemCPUsCountv
 libtcmalloc.so.4:_Z20GetUniquePathFromEnvPKcPc
 libtcmalloc.so.4:_Z20InitSystemAllocatorsv
-libtcmalloc.so.4:_Z20SleepForMillisecondsi
 libtcmalloc.so.4:_Z20TCMalloc_SystemAllocmPmm
 libtcmalloc.so.4:_Z21TCMalloc_SystemCommitPvm
 libtcmalloc.so.4:_Z22TCMalloc_SystemReleasePvm
@@ -413,6 +410,7 @@ libtcmalloc.so.4:_ZN8tcmalloc11ThreadCache7CleanupEv
 libtcmalloc.so.4:_ZN8tcmalloc11ThreadCache7InitTSDEv
 libtcmalloc.so.4:_ZN8tcmalloc11ThreadCache7NewHeapEm
 libtcmalloc.so.4:_ZN8tcmalloc11ThreadCache8ScavengeEv
+libtcmalloc.so.4:_ZN8tcmalloc13EmergencyFreeEPv
 libtcmalloc.so.4:_ZN8tcmalloc13MetaDataAllocEm
 libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList11InsertRangeEPvS1_i
 libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList11RemoveRangeEPPvS2_i
@@ -427,6 +425,8 @@ libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList21FetchFromOneSpansSafeEiPPvS2_
 libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList4InitEm
 libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList8PopulateEv
 libtcmalloc.so.4:_ZN8tcmalloc15CentralFreeList9tc_lengthEv
+libtcmalloc.so.4:_ZN8tcmalloc15EmergencyCallocEmm
+libtcmalloc.so.4:_ZN8tcmalloc15EmergencyMallocEm
 libtcmalloc.so.4:_ZN8tcmalloc15StackTraceTable23ReadStackTracesAndClearEv
 libtcmalloc.so.4:_ZN8tcmalloc15StackTraceTable8AddTraceERKNS_10StackTraceE
 libtcmalloc.so.4:_ZN8tcmalloc15StackTraceTableC1Ev
@@ -435,6 +435,7 @@ libtcmalloc.so.4:_ZN8tcmalloc15StackTraceTableD1Ev
 libtcmalloc.so.4:_ZN8tcmalloc15StackTraceTableD2Ev
 libtcmalloc.so.4:_ZN8tcmalloc16AlignmentForSizeEm
 libtcmalloc.so.4:_ZN8tcmalloc16DumpProcSelfMapsEi
+libtcmalloc.so.4:_ZN8tcmalloc16EmergencyReallocEPvm
 libtcmalloc.so.4:_ZN8tcmalloc16FillProcSelfMapsEPciPb
 libtcmalloc.so.4:_ZN8tcmalloc19CentralCacheLockAllEv
 libtcmalloc.so.4:_ZN8tcmalloc20EnterStacktraceScopeEv
@@ -511,7 +512,6 @@ libtcmalloc.so.4:_ZNK4base11ElfMemImage9GetVersymEi
 libtcmalloc.so.4:_ZNK4base8internal8HookListIPFvPKvmEE11GetSingularEv
 libtcmalloc.so.4:_ZNK4base8internal8HookListIPFvPKvmEE5emptyEv
 libtcmalloc.so.4:_ZNK4base8internal8HookListIPFvPKvmEE8TraverseEPS5_i
-libtcmalloc.so.4:_ZNK8tcmalloc15StackTraceTable6Bucket8KeyEqualEmRKNS_10StackTraceE
 libtcmalloc.so.4:nallocx
 libtcmalloc.so.4:tc_malloc_skip_new_handler
 libtcmalloc.so.4:tc_nallocx
@@ -574,6 +574,7 @@ libtcmalloc_and_profiler.so.4:ProfilerDisable
 libtcmalloc_and_profiler.so.4:ProfilerEnable
 libtcmalloc_and_profiler.so.4:ProfilerFlush
 libtcmalloc_and_profiler.so.4:ProfilerGetCurrentState
+libtcmalloc_and_profiler.so.4:ProfilerGetStackTrace
 libtcmalloc_and_profiler.so.4:ProfilerRegisterThread
 libtcmalloc_and_profiler.so.4:ProfilerStart
 libtcmalloc_and_profiler.so.4:ProfilerStartWithOptions
@@ -583,7 +584,6 @@ libtcmalloc_and_profiler.so.4:RunningOnValgrind
 libtcmalloc_and_profiler.so.4:TCMallocGetenvSafe
 libtcmalloc_and_profiler.so.4:TCMalloc_ListAllProcessThreads
 libtcmalloc_and_profiler.so.4:TCMalloc_ResumeAllProcessThreads
-libtcmalloc_and_profiler.so.4:ValgrindSlowdown
 libtcmalloc_and_profiler.so.4:_Z13GetStackTracePPvii
 libtcmalloc_and_profiler.so.4:_Z14GetStackFramesPPvPiii
 libtcmalloc_and_profiler.so.4:_Z16GetenvBeforeMainPKc
@@ -592,7 +592,6 @@ libtcmalloc_and_profiler.so.4:_Z18GetSystemCPUsCountv
 libtcmalloc_and_profiler.so.4:_Z19ProfileHandlerResetv
 libtcmalloc_and_profiler.so.4:_Z20GetUniquePathFromEnvPKcPc
 libtcmalloc_and_profiler.so.4:_Z20InitSystemAllocatorsv
-libtcmalloc_and_profiler.so.4:_Z20SleepForMillisecondsi
 libtcmalloc_and_profiler.so.4:_Z20TCMalloc_SystemAllocmPmm
 libtcmalloc_and_profiler.so.4:_Z21TCMalloc_SystemCommitPvm
 libtcmalloc_and_profiler.so.4:_Z22ProfileHandlerGetStateP19ProfileHandlerState
@@ -865,6 +864,7 @@ libtcmalloc_and_profiler.so.4:_ZN8tcmalloc11ThreadCache7CleanupEv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc11ThreadCache7InitTSDEv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc11ThreadCache7NewHeapEm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc11ThreadCache8ScavengeEv
+libtcmalloc_and_profiler.so.4:_ZN8tcmalloc13EmergencyFreeEPv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc13MetaDataAllocEm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList11InsertRangeEPvS1_i
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList11RemoveRangeEPPvS2_i
@@ -879,6 +879,8 @@ libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList21FetchFromOneSpansSa
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList4InitEm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList8PopulateEv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15CentralFreeList9tc_lengthEv
+libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15EmergencyCallocEmm
+libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15EmergencyMallocEm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15StackTraceTable23ReadStackTracesAndClearEv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15StackTraceTable8AddTraceERKNS_10StackTraceE
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15StackTraceTableC1Ev
@@ -887,6 +889,7 @@ libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15StackTraceTableD1Ev
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc15StackTraceTableD2Ev
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc16AlignmentForSizeEm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc16DumpProcSelfMapsEi
+libtcmalloc_and_profiler.so.4:_ZN8tcmalloc16EmergencyReallocEPvm
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc16FillProcSelfMapsEPciPb
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc19CentralCacheLockAllEv
 libtcmalloc_and_profiler.so.4:_ZN8tcmalloc20EnterStacktraceScopeEv
@@ -964,7 +967,6 @@ libtcmalloc_and_profiler.so.4:_ZNK4base11ElfMemImage9GetVersymEi
 libtcmalloc_and_profiler.so.4:_ZNK4base8internal8HookListIPFvPKvmEE11GetSingularEv
 libtcmalloc_and_profiler.so.4:_ZNK4base8internal8HookListIPFvPKvmEE5emptyEv
 libtcmalloc_and_profiler.so.4:_ZNK4base8internal8HookListIPFvPKvmEE8TraverseEPS5_i
-libtcmalloc_and_profiler.so.4:_ZNK8tcmalloc15StackTraceTable6Bucket8KeyEqualEmRKNS_10StackTraceE
 libtcmalloc_and_profiler.so.4:nallocx
 libtcmalloc_and_profiler.so.4:tc_malloc_skip_new_handler
 libtcmalloc_and_profiler.so.4:tc_nallocx
@@ -1028,7 +1030,6 @@ libtcmalloc_debug.so.4:RunningOnValgrind
 libtcmalloc_debug.so.4:TCMallocGetenvSafe
 libtcmalloc_debug.so.4:TCMalloc_ListAllProcessThreads
 libtcmalloc_debug.so.4:TCMalloc_ResumeAllProcessThreads
-libtcmalloc_debug.so.4:ValgrindSlowdown
 libtcmalloc_debug.so.4:_Z13GetStackTracePPvii
 libtcmalloc_debug.so.4:_Z14GetStackFramesPPvPiii
 libtcmalloc_debug.so.4:_Z16GetenvBeforeMainPKc
@@ -1038,7 +1039,6 @@ libtcmalloc_debug.so.4:_Z19__malloctrace_writePKcm
 libtcmalloc_debug.so.4:_Z20DanglingWriteCheckerv
 libtcmalloc_debug.so.4:_Z20GetUniquePathFromEnvPKcPc
 libtcmalloc_debug.so.4:_Z20InitSystemAllocatorsv
-libtcmalloc_debug.so.4:_Z20SleepForMillisecondsi
 libtcmalloc_debug.so.4:_Z20TCMalloc_SystemAllocmPmm
 libtcmalloc_debug.so.4:_Z21TCMalloc_SystemCommitPvm
 libtcmalloc_debug.so.4:_Z22TCMalloc_SystemReleasePvm
@@ -1270,6 +1270,7 @@ libtcmalloc_debug.so.4:_ZN8tcmalloc11ThreadCache7CleanupEv
 libtcmalloc_debug.so.4:_ZN8tcmalloc11ThreadCache7InitTSDEv
 libtcmalloc_debug.so.4:_ZN8tcmalloc11ThreadCache7NewHeapEm
 libtcmalloc_debug.so.4:_ZN8tcmalloc11ThreadCache8ScavengeEv
+libtcmalloc_debug.so.4:_ZN8tcmalloc13EmergencyFreeEPv
 libtcmalloc_debug.so.4:_ZN8tcmalloc13MetaDataAllocEm
 libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList11InsertRangeEPvS1_i
 libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList11RemoveRangeEPPvS2_i
@@ -1284,6 +1285,8 @@ libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList21FetchFromOneSpansSafeEiPPv
 libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList4InitEm
 libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList8PopulateEv
 libtcmalloc_debug.so.4:_ZN8tcmalloc15CentralFreeList9tc_lengthEv
+libtcmalloc_debug.so.4:_ZN8tcmalloc15EmergencyCallocEmm
+libtcmalloc_debug.so.4:_ZN8tcmalloc15EmergencyMallocEm
 libtcmalloc_debug.so.4:_ZN8tcmalloc15StackTraceTable23ReadStackTracesAndClearEv
 libtcmalloc_debug.so.4:_ZN8tcmalloc15StackTraceTable8AddTraceERKNS_10StackTraceE
 libtcmalloc_debug.so.4:_ZN8tcmalloc15StackTraceTableC1Ev
@@ -1292,6 +1295,7 @@ libtcmalloc_debug.so.4:_ZN8tcmalloc15StackTraceTableD1Ev
 libtcmalloc_debug.so.4:_ZN8tcmalloc15StackTraceTableD2Ev
 libtcmalloc_debug.so.4:_ZN8tcmalloc16AlignmentForSizeEm
 libtcmalloc_debug.so.4:_ZN8tcmalloc16DumpProcSelfMapsEi
+libtcmalloc_debug.so.4:_ZN8tcmalloc16EmergencyReallocEPvm
 libtcmalloc_debug.so.4:_ZN8tcmalloc16FillProcSelfMapsEPciPb
 libtcmalloc_debug.so.4:_ZN8tcmalloc19CentralCacheLockAllEv
 libtcmalloc_debug.so.4:_ZN8tcmalloc20EnterStacktraceScopeEv
@@ -1368,7 +1372,6 @@ libtcmalloc_debug.so.4:_ZNK4base11ElfMemImage9GetVersymEi
 libtcmalloc_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE11GetSingularEv
 libtcmalloc_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE5emptyEv
 libtcmalloc_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE8TraverseEPS5_i
-libtcmalloc_debug.so.4:_ZNK8tcmalloc15StackTraceTable6Bucket8KeyEqualEmRKNS_10StackTraceE
 libtcmalloc_debug.so.4:nallocx
 libtcmalloc_debug.so.4:tc_malloc_skip_new_handler
 libtcmalloc_debug.so.4:tc_nallocx
@@ -1424,13 +1427,11 @@ libtcmalloc_minimal.so.4:MallocHook_SetPreSbrkHook
 libtcmalloc_minimal.so.4:MallocHook_SetSbrkHook
 libtcmalloc_minimal.so.4:RunningOnValgrind
 libtcmalloc_minimal.so.4:TCMallocGetenvSafe
-libtcmalloc_minimal.so.4:ValgrindSlowdown
 libtcmalloc_minimal.so.4:_Z16GetenvBeforeMainPKc
 libtcmalloc_minimal.so.4:_Z17RawOpenForWritingPKc
 libtcmalloc_minimal.so.4:_Z18GetSystemCPUsCountv
 libtcmalloc_minimal.so.4:_Z20GetUniquePathFromEnvPKcPc
 libtcmalloc_minimal.so.4:_Z20InitSystemAllocatorsv
-libtcmalloc_minimal.so.4:_Z20SleepForMillisecondsi
 libtcmalloc_minimal.so.4:_Z20TCMalloc_SystemAllocmPmm
 libtcmalloc_minimal.so.4:_Z21TCMalloc_SystemCommitPvm
 libtcmalloc_minimal.so.4:_Z22TCMalloc_SystemReleasePvm
@@ -1625,7 +1626,6 @@ libtcmalloc_minimal.so.4:_ZNK16ProcMapsIterator5ValidEv
 libtcmalloc_minimal.so.4:_ZNK4base8internal8HookListIPFvPKvmEE11GetSingularEv
 libtcmalloc_minimal.so.4:_ZNK4base8internal8HookListIPFvPKvmEE5emptyEv
 libtcmalloc_minimal.so.4:_ZNK4base8internal8HookListIPFvPKvmEE8TraverseEPS5_i
-libtcmalloc_minimal.so.4:_ZNK8tcmalloc15StackTraceTable6Bucket8KeyEqualEmRKNS_10StackTraceE
 libtcmalloc_minimal.so.4:nallocx
 libtcmalloc_minimal.so.4:tc_malloc_skip_new_handler
 libtcmalloc_minimal.so.4:tc_nallocx
@@ -1681,7 +1681,6 @@ libtcmalloc_minimal_debug.so.4:MallocHook_SetPreSbrkHook
 libtcmalloc_minimal_debug.so.4:MallocHook_SetSbrkHook
 libtcmalloc_minimal_debug.so.4:RunningOnValgrind
 libtcmalloc_minimal_debug.so.4:TCMallocGetenvSafe
-libtcmalloc_minimal_debug.so.4:ValgrindSlowdown
 libtcmalloc_minimal_debug.so.4:_Z16GetenvBeforeMainPKc
 libtcmalloc_minimal_debug.so.4:_Z17RawOpenForWritingPKc
 libtcmalloc_minimal_debug.so.4:_Z18GetSystemCPUsCountv
@@ -1689,7 +1688,6 @@ libtcmalloc_minimal_debug.so.4:_Z19__malloctrace_writePKcm
 libtcmalloc_minimal_debug.so.4:_Z20DanglingWriteCheckerv
 libtcmalloc_minimal_debug.so.4:_Z20GetUniquePathFromEnvPKcPc
 libtcmalloc_minimal_debug.so.4:_Z20InitSystemAllocatorsv
-libtcmalloc_minimal_debug.so.4:_Z20SleepForMillisecondsi
 libtcmalloc_minimal_debug.so.4:_Z20TCMalloc_SystemAllocmPmm
 libtcmalloc_minimal_debug.so.4:_Z21TCMalloc_SystemCommitPvm
 libtcmalloc_minimal_debug.so.4:_Z22TCMalloc_SystemReleasePvm
@@ -1886,7 +1884,6 @@ libtcmalloc_minimal_debug.so.4:_ZNK16ProcMapsIterator5ValidEv
 libtcmalloc_minimal_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE11GetSingularEv
 libtcmalloc_minimal_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE5emptyEv
 libtcmalloc_minimal_debug.so.4:_ZNK4base8internal8HookListIPFvPKvmEE8TraverseEPS5_i
-libtcmalloc_minimal_debug.so.4:_ZNK8tcmalloc15StackTraceTable6Bucket8KeyEqualEmRKNS_10StackTraceE
 libtcmalloc_minimal_debug.so.4:nallocx
 libtcmalloc_minimal_debug.so.4:tc_malloc_skip_new_handler
 libtcmalloc_minimal_debug.so.4:tc_nallocx
