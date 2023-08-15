@@ -1,1 +1,1 @@
-cve-2018-13420.nopatch
+backport-set-description-field-in-generated-pkg-config-files.patch
