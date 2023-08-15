@@ -1,0 +1,4 @@
+# Fixup pkg-config files
+for pc_file in %{buildroot}/usr/lib64/pkgconfig/*.pc; do
+	sed -i 's/^Summary:/Description:/' "${pc_file}"
+done

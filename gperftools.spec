@@ -5,7 +5,7 @@
 #
 Name     : gperftools
 Version  : 2.11
-Release  : 22
+Release  : 23
 URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.11/gperftools-2.11.tar.gz
 Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.11/gperftools-2.11.tar.gz
 Summary  : @CMAKE_PROJECT_DESCRIPTION@
@@ -97,7 +97,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1692125073
+export SOURCE_DATE_EPOCH=1692141161
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -129,7 +129,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1692125073
+export SOURCE_DATE_EPOCH=1692141161
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gperftools
 cp %{_builddir}/gperftools-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82 || :
@@ -137,6 +137,12 @@ pushd ../buildavx2/
 %make_install_v3
 popd
 %make_install
+## install_append content
+# Fixup pkg-config files
+for pc_file in %{buildroot}/usr/lib64/pkgconfig/*.pc; do
+sed -i 's/^Summary:/Description:/' "${pc_file}"
+done
+## install_append end
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
