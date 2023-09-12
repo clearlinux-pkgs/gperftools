@@ -4,10 +4,10 @@
 # Using build pattern: configure
 #
 Name     : gperftools
-Version  : 2.11
-Release  : 24
-URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.11/gperftools-2.11.tar.gz
-Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.11/gperftools-2.11.tar.gz
+Version  : 2.13
+Release  : 25
+URL      : https://github.com/gperftools/gperftools/releases/download/gperftools-2.13/gperftools-2.13.tar.gz
+Source0  : https://github.com/gperftools/gperftools/releases/download/gperftools-2.13/gperftools-2.13.tar.gz
 Summary  : @CMAKE_PROJECT_DESCRIPTION@
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -20,7 +20,6 @@ BuildRequires : libunwind-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
-Patch1: backport-set-description-field-in-generated-pkg-config-files.patch
 
 %description
 gperftools
@@ -86,11 +85,10 @@ man components for the gperftools package.
 
 
 %prep
-%setup -q -n gperftools-2.11
-cd %{_builddir}/gperftools-2.11
-%patch -P 1 -p1
+%setup -q -n gperftools-2.13
+cd %{_builddir}/gperftools-2.13
 pushd ..
-cp -a gperftools-2.11 buildavx2
+cp -a gperftools-2.13 buildavx2
 popd
 
 %build
@@ -98,7 +96,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1692142052
+export SOURCE_DATE_EPOCH=1694541693
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -107,8 +105,9 @@ export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -f
 export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-%reconfigure --disable-static
+%configure --disable-static
 make  %{?_smp_mflags}
+
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
@@ -116,10 +115,9 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
-%reconfigure --disable-static
+%configure --disable-static
 make  %{?_smp_mflags}
 popd
-
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
@@ -130,7 +128,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1692142052
+export SOURCE_DATE_EPOCH=1694541693
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gperftools
 cp %{_builddir}/gperftools-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gperftools/40cce6f974f678788e7de2fb9928258219416c82 || :
@@ -138,12 +136,6 @@ pushd ../buildavx2/
 %make_install_v3
 popd
 %make_install
-## install_append content
-# Fixup pkg-config files
-for pc_file in %{buildroot}/usr/lib64/pkgconfig/*.pc; do
-sed -i 's/^Summary:/Description:/' "${pc_file}"
-done
-## install_append end
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
@@ -193,24 +185,24 @@ done
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libprofiler.so.0.5.7
-/V3/usr/lib64/libtcmalloc.so.4.5.12
-/V3/usr/lib64/libtcmalloc_and_profiler.so.4.6.7
-/V3/usr/lib64/libtcmalloc_debug.so.4.5.12
-/V3/usr/lib64/libtcmalloc_minimal.so.4.5.12
-/V3/usr/lib64/libtcmalloc_minimal_debug.so.4.5.12
+/V3/usr/lib64/libprofiler.so.0.5.9
+/V3/usr/lib64/libtcmalloc.so.4.5.14
+/V3/usr/lib64/libtcmalloc_and_profiler.so.4.6.9
+/V3/usr/lib64/libtcmalloc_debug.so.4.5.14
+/V3/usr/lib64/libtcmalloc_minimal.so.4.5.14
+/V3/usr/lib64/libtcmalloc_minimal_debug.so.4.5.14
 /usr/lib64/libprofiler.so.0
-/usr/lib64/libprofiler.so.0.5.7
+/usr/lib64/libprofiler.so.0.5.9
 /usr/lib64/libtcmalloc.so.4
-/usr/lib64/libtcmalloc.so.4.5.12
+/usr/lib64/libtcmalloc.so.4.5.14
 /usr/lib64/libtcmalloc_and_profiler.so.4
-/usr/lib64/libtcmalloc_and_profiler.so.4.6.7
+/usr/lib64/libtcmalloc_and_profiler.so.4.6.9
 /usr/lib64/libtcmalloc_debug.so.4
-/usr/lib64/libtcmalloc_debug.so.4.5.12
+/usr/lib64/libtcmalloc_debug.so.4.5.14
 /usr/lib64/libtcmalloc_minimal.so.4
-/usr/lib64/libtcmalloc_minimal.so.4.5.12
+/usr/lib64/libtcmalloc_minimal.so.4.5.14
 /usr/lib64/libtcmalloc_minimal_debug.so.4
-/usr/lib64/libtcmalloc_minimal_debug.so.4.5.12
+/usr/lib64/libtcmalloc_minimal_debug.so.4.5.14
 
 %files license
 %defattr(0644,root,root,0755)
